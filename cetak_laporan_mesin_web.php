@@ -24,6 +24,12 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <title>Cetak Laporan Unit Mesin Web</title>
     <style>
+         .container {
+            max-width: 4000px;
+            margin: 0 auto;
+            padding: 0px;
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -64,6 +70,21 @@ if (mysqli_num_rows($result) > 0) {
         th {
             background-color: #f2f2f2;
         }
+
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .footer img {
+            width: 100px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .signatories {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -72,10 +93,10 @@ if (mysqli_num_rows($result) > 0) {
         <div class="header">
             <img src="/img/logo.png" alt="Galaxy Offset Logo" style="margin-right:30px">
             <div class="company-info">
-                CV. GALAXY MEDIA ILMU<br>
-                GALAXY OFFSET (Percetakan)<br>
-                Alamat: RT.05 Ds. Blali, Selobanteng, Pungging, Bantul, DIY 55771<br>
-                Cp: 081327575687 email: masteryudha85@gmail.com
+                <b>CV. GALAXY MEDIA ILMU<br></b>
+                <b>GALAXY OFFSET (Percetakan)<br></b>
+                Alamat: RT.05 Ds. Blali, Seloharjo, Pundong, Bantul, DIY 55771<br>
+                Cp: 081327575687 Email: Galaxymedia@gmail.com
             </div>
         </div>
         <h2>Laporan Unit Mesin Web</h2>
@@ -83,7 +104,7 @@ if (mysqli_num_rows($result) > 0) {
         <table>
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>Nomor urut</th>
                     <th>No SPK</th>
                     <th>Jenis Unit Kerja</th>
                     <th>Judul Buku</th>
@@ -96,23 +117,32 @@ if (mysqli_num_rows($result) > 0) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data as $data) { ?>
+                <?php 
+                $nomor_urut = 1; // Inisialisasi nomor urut
+                foreach ($data as $row) { ?>
                     <tr>
-                        <td><?php echo $data['id']; ?></td>
-                        <td><?php echo $data['no_spk']; ?></td>
-                        <td><?php echo $data['jenis_unit_kerja']; ?></td>
-                        <td><?php echo $data['judul_buku']; ?></td>
-                        <td><?php echo $data['tanggal']; ?></td>
-                        <td><?php echo $data['shift_kerja']; ?></td>
-                        <td><?php echo $data['jumlah_plat']; ?></td>
-                        <td><?php echo $data['jumlah_catern']; ?></td>
-                        <td><?php echo $data['jumlah_roll']; ?></td>
-                        <td><?php echo $data['hasil_cetak']; ?></td>
+                        <td><?php echo $nomor_urut++; ?></td>
+                        <td><?php echo $row['no_spk']; ?></td>
+                        <td><?php echo $row['jenis_unit_kerja']; ?></td>
+                        <td><?php echo $row['judul_buku']; ?></td>
+                        <td><?php echo $row['tanggal']; ?></td>
+                        <td><?php echo $row['shift_kerja']; ?></td>
+                        <td><?php echo $row['jumlah_plat']; ?></td>
+                        <td><?php echo $row['jumlah_catern']; ?></td>
+                        <td><?php echo $row['jumlah_roll']; ?></td>
+                        <td><?php echo $row['hasil_cetak']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
-        <br>
+        <div class="footer">
+            <div class="signatories">
+                <p>Penanggung Jawab</p>
+                <p>Staf Admin</p>
+                <img src="/img/ttd.png" alt="Pranowo">
+                <p>Pranowo</p>
+            </div>
+        </div>
     </div>
 </body>
 

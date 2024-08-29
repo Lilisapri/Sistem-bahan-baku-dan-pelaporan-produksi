@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Admin pra  cetak</title>
+  <title>Admin pra cetak</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,114 +20,117 @@
 
 </head>
 
-
-
 <body id="bg-gradient-primary">
-		<div class="card shadow">
-			From  Edit SPK
-		</div>
-		<div class="card-body">
+    <div class="card shadow">
+        From Edit SPK
+    </div>
+    <div class="card-body">
         <?php 
-		  require 'koneksi.php';
-		  $sql=$conn->query("select * from spk where id_spk='$_GET[id_spk]'");
-          $data = $sql->fetch_assoc();
-            ?>
-		  <form action="update_spk.php" method="post" class="form-herizontal">
-		  <div class="form-group col-sm-8">
-	
-            <input type="hidden" name="id_spk" value="<?php echo $data['id_spk'];?>">
-			 <div class="form-group col-sm-4">
-				  
-			  <label> No SPK</label>
-				<input type="text" name="no_spk" class="form-control" value="<?php echo $data['no_spk'];?> ">
-				</div>
+        require 'koneksi.php';
+        $sql=$conn->query("select * from spk where id_spk='$_GET[id_spk]'");
+        $data = $sql->fetch_assoc();
+        ?>
+        <form action="update_spk.php" method="post" class="form-herizontal">
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="hidden" name="id_spk" value="<?php echo $data['id_spk'];?>">
+                    <div class="form-group">
+                        <label>No SPK</label>
+                        <input type="text" name="no_spk" class="form-control" value="<?php echo $data['no_spk'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>No ISBN</label>
+                        <input type="text" name="no_isbn" class="form-control" value="<?php echo $data['no_isbn'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal</label>
+                        <input type="date" name="tanggal" class="form-control" value="<?php echo date('Y-m-d', strtotime($data['tanggal']));?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Oplah Cetak</label>
+                        <input type="text" name="oplah_cetak" class="form-control" value="<?php echo $data['oplah_cetak'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Ukuran buku</label>
+                        <select name="ukuran_buku" class="form-control">
+                            <option value="14x20">14x20</option>
+                            <option value="19x26">19x26</option>
+                            <option value="13x19">13x19</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ukuran kertas</label>
+                        <select name="ukuran_kertas" class="form-control">
+                            <option value="BOOK PAPER 52 GRAM -79X109 PREMIUM">BOOK PAPER 52 GRAM -79X109 PREMIUM</option>
+                            <option value="BOOK PAPER 61X86-52 GRAM">BOOK PAPER 61X86-52 GRAM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Mesin</label>
+                        <select name="mesin_cetak" class="form-control">
+                            <option value="Mesin Isheet">Mesin Insheet</option>
+                            <option value="Mesin Web">Mesin Web</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Model Catren</label>
+                        <select name="model_catern" class="form-control">
+                            <option value="Model catern 16">Model catern 16</option>
+                            <option value="Model catern 32">Model catern 32</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Judul Buku</label>
+                        <input type="text" name="judul_buku" class="form-control" value="<?php echo $data['judul_buku'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Permintaan Selesai</label>
+                        <input type="date" name="tanggal_permintaan_selesai" class="form-control" value="<?php echo $data['tanggal_permintaan_selesai'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Oplah Inshet</label>
+                        <input type="text" name="oplah_insheet" class="form-control" value="<?php echo $data['oplah_insheet'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Halaman</label>
+                        <input type="text" name="jumlah_halaman" class="form-control" value="<?php echo $data['jumlah_halaman'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Catern</label>
+                        <input type="text" name="jumlah_catern" class="form-control" value="<?php echo $data['jumlah_catern'];?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Plat</label>
+                        <input type="text" name="jumlah_plat" class="form-control" value="<?php echo $data['jumlah_plat'];?>">
+                    </div>
+                   
+                    <div class="form-group">
+                        <label>Kebutuhan kertas</label>
+                        <input type="text" name="kebutuhan_kertas" class="form-control" value="<?php echo $data['kebutuhan_kertas'];?>">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="submit" class="btn btn-primary" value="Update SPK">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-			 <div class="form-group col-sm-4"> 
-			  <label> Judul Buku </label>
-				<input type="text" name="judul_buku" class="form-control" value="<?php echo $data['judul_buku'];?> ">
-				</div>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-			 <div class="form-group col-sm-4"> 
-			  <label> No ISBN</label>
-				<input type="text" name="no_isbn" class="form-control" value="<?php echo $data['no_isbn'];?> ">
-				
-            
-                <label> Tanggal</label>
-				<input type="date" name="tanggal" class="form-control" value="<?php echo $data['tanggal'];?> ">
-				</div>
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Tanggal Permintaan Selesai </label>
-				<input type="date" name="tanggal_permintaan_selesai" class="form-control" value="<?php echo $data['tanggal_permintaan_selesai'];?> ">
-				</div>
-
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Oplah Cetak</label>
-				<input type="text" name="oplah_cetak" class="form-control" value="<?php echo $data['oplah_cetak'];?> ">
-                
-
-                <label> Oplah Inshet</label>
-				<input type="text" name="oplah_insheet" class="form-control" value="<?php echo $data['oplah_insheet'];?> ">
-				</div>
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Ukuran buku </label>
-				<input type="text" name="ukuran_buku" class="form-control" value="<?php echo $data['ukuran_buku'];?> ">
-				</div>
-
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Jumlah Halaman</label>
-				<input type="text" name="jumlah_halaman" class="form-control" value="<?php echo $data['jumlah_halaman'];?> ">
-
-                <label> Jumlah Catern</label>
-				<input type="text" name="jumlah_catern" class="form-control" value="<?php echo $data['jumlah_catern'];?> ">
-				</div>
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Jumlah Plat </label>
-				<input type="text" name="jumlah_plat" class="form-control" value="<?php echo $data['jumlah_plat'];?> ">
-				</div>
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Ukuran kertas</label>
-				<input type="text" name="ukuran_kertas" class="form-control" value="<?php echo $data['ukuran_kertas'];?> ">
-
-                <label> Kebutuhan kertas</label>
-				<input type="text" name="kebutuhan_kertas" class="form-control" value="<?php echo $data['kebutuhan_kertas'];?> ">
-				</div>
-
-			 <div class="form-group col-sm-4"> 
-			  <label> Mesin Cetak </label>
-				<input type="text" name="mesin_cetak" class="form-control" value="<?php echo $data['mesin_cetak'];?> ">
-				</div>
-                
-			 <div class="form-group col-sm-4"> 
-			 <input type="submit" class="btn btn-primary" value="Update SPK">
-			 </div>
-			 </form>
-			 </div>
-			 </div>
-
-
-
-	
-	
-	
-	
-	
-	
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

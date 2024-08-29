@@ -23,7 +23,7 @@
         <div class="card-body">
             <form action="simpan_bahan_baku.php" method="post" class="form-horizontal">
                 <div class="form-row">
-                    <div class="col-md-6 mb-3 ">
+                    <div class="col-md-6 mb-3">
                         <label for="kode_bahan_baku">Kode Bahan Baku</label>
                         <input type="text" id="kode_bahan_baku" placeholder="Masukkan Kode Bahan Baku" name="kode_bahan_baku" class="form-control">
                     </div>
@@ -37,14 +37,13 @@
                     <div class="col-md-6 mb-3">
                         <label for="jenis">Jenis Bahan Baku</label>
                         <select id="jenis" name="jenis" class="form-control">
-                        <option value="Paper Roll">Kertas roll</option>
-                            <option value="Sheet Book Papper 52 Gram 79x109">Kertas Sheet Book papper 52 gram 79x109</option>
+                            <option value="Paper Roll">Kertas Roll-MS-Web</option>
+                            <option value="Sheet paper">Kertas Sheet-Unit-potong</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="satuan">Satuan</label>
                         <select id="satuan" name="satuan" class="form-control">
-                        
                             <option value="Roll">Roll</option>
                             <option value="Rim">Rim</option>
                         </select>
@@ -81,6 +80,27 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom script for updating jenis based on satuan -->
+    <script>
+        document.getElementById('satuan').addEventListener('change', function() {
+            var jenis = document.getElementById('jenis');
+            var satuan = this.value;
+
+            // Clear current options
+            while (jenis.options.length) {
+                jenis.remove(0);
+            }
+
+            // Add new options based on selected satuan
+            if (satuan === 'Roll') {
+                var option = new Option('Kertas Roll-MS-Web', 'Paper Roll');
+                jenis.add(option);
+            } else if (satuan === 'Rim') {
+                var option = new Option('Kertas Sheet-Unit-potong', 'Sheet paper');
+                jenis.add(option);
+            }
+        });
+    </script>
 </body>
 
 </html>

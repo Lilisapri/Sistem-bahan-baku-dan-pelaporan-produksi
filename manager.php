@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sistem Informasi Laporan Produksi</title>
+  <title>Sistem Informasi Persediaan Bahan Baku Dan Pelaporan Produksi</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -130,7 +130,7 @@
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <div>
-            <h4> Sistem Informasi Laporan Produksi</h4>
+            <h4><b> Sistem Informasi Persediaan Bahan Baku Dan Pelaporan Produksi</b></h4>
           </div>
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -160,7 +160,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>@2023 CV Galaxy Media Ilmu</span>
+            
           </div>
         </div>
       </footer>

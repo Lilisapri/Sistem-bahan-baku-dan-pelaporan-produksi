@@ -21,8 +21,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nomor Urut</th>
-                                
+                                <th>Nomor urut</th>
                                 <th>Kode Bahan Baku</th>
                                 <th>Nama</th>
                                 <th>Jenis</th>
@@ -59,7 +58,6 @@ foreach ($data as $data) {
     $nomor_urut++; // Tambahkan 1 setiap kali looping
 }
 ?>
-
                         </tbody>
                     </table>
                 </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Laporan Stahl</title>
 </head>
 <script>
@@ -62,7 +62,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>Nomor urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -72,33 +72,39 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <?php
-                require 'koneksi.php';
+              <?php
+              require 'koneksi.php';
 
-                $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
-                $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
+              $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
+              $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
 
-                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,ust.tanggal,shift_kerja,hasil_lipat
-                        FROM unit_stahl ust
-                        INNER JOIN spk ON ust.id_spk = spk.id_spk
-                        INNER JOIN unit_kerja ON ust.id_unit_kerja = unit_kerja.`id_unit_kerja`
-                        WHERE ust.`tanggal` >= '$awal' AND ust.`tanggal` <= '$akhir'";
-                $result = mysqli_query($conn, $sql);
-                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                foreach ($data as $data) {
+              $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,ust.tanggal,shift_kerja,hasil_lipat
+                      FROM unit_stahl ust
+                      INNER JOIN spk ON ust.id_spk = spk.id_spk
+                      INNER JOIN unit_kerja ON ust.id_unit_kerja = unit_kerja.`id_unit_kerja`
+                      WHERE ust.`tanggal` >= '$awal' AND ust.`tanggal` <= '$akhir'";
+              $result = mysqli_query($conn, $sql);
+              $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              // Deklarasi counter
+              $counter = 1;
+              foreach ($data as $row) {
                 ?>
-                  <td><?php echo $data['id']; ?></td>
-                  <td><?php echo $data['no_spk']; ?></td>
-                  <td><?php echo $data['jenis_unit_kerja']; ?></td>
-                  <td><?php echo $data['judul_buku']; ?></td>
-                  <td><?php echo $data['tanggal']; ?></td>
-                  <td><?php echo $data['shift_kerja']; ?></td>
-                  <td><?php echo $data['hasil_lipat']; ?></td>
-              </tr>
-            <?php  } ?>
+                <tr>
+                  <td><?php echo $counter; ?></td>
+                  
+                  <td><?php echo $row['no_spk']; ?></td>
+                  <td><?php echo $row['jenis_unit_kerja']; ?></td>
+                  <td><?php echo $row['judul_buku']; ?></td>
+                  <td><?php echo $row['tanggal']; ?></td>
+                  <td><?php echo $row['shift_kerja']; ?></td>
+                  <td><?php echo $row['hasil_lipat']; ?></td>
+                </tr>
+              <?php
+                // Increment counter
+                $counter++;
+              }
+              ?>
           </table>
-          </td>
         </div>
       </div>
     </div>

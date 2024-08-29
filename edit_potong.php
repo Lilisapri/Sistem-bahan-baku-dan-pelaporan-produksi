@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,10 +16,7 @@
 
 	<!-- Custom styles for this template-->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
-
-
 
 <body id="bg-gradient-primary">
 	<div class="card shadow">
@@ -32,94 +28,94 @@
 		$sql = $conn->query("select * from unit_potong where id='$_GET[id]'");
 		$data = $sql->fetch_assoc();
 		?>
-		<form action="update_potong.php" method="post" class="form-herizontal">
-			<div class="form-group col-sm-8">
+		<form action="update_potong.php" method="post" class="form-horizontal">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>id</label>
+						<input type="text" name="id" class="form-control" value="<?php echo $data['id']; ?>">
+					</div>
 
-				<div class="form-group col-sm-4">
-					<label> id</label>
-					<input type="text" name="id" class="form-control" value="<?php echo $data['id']; ?> ">
+					<div class="form-group">
+						<label>No Spk</label>
+						<select name="id_spk" class="form-control">
+							<?php
+							include 'koneksi.php';
+							$sql_spk = $conn->query("SELECT * FROM spk");
+							while ($data_spk = $sql_spk->fetch_assoc()) {
+								echo '<option value="' . $data_spk['id_spk'] . '">' . $data_spk['id_spk'] . '</option>';
+							}
+							?>
+						</select>
+					</div>
+
+					<div class="form-group mt-2">
+						<label>Pilih Unit Kerja</label>
+						<select name="id_unit_kerja" class="form-control">
+							<?php
+							include 'koneksi.php';
+							$sql_unit_kerja = $conn->query("SELECT * FROM unit_kerja WHERE jenis_unit_kerja = 'Unit Potong'");
+while ($data_unit_kerja = $sql_unit_kerja->fetch_assoc()) {
+    echo '<option value="' . $data_unit_kerja['id_unit_kerja'] . '">' . $data_unit_kerja['jenis_unit_kerja'] . '</option>';
+}
+?>
+						</select>
+					</div>
+
+					<div class="form-group mt-2">
+						<label>Shift Kerja</label>
+						<select name="shift_kerja" class="form-control">
+							<option value="Pagi">Pagi</option>
+							<option value="Malam">Malam</option>
+						</select>
+					</div>
 				</div>
 
-				<input type="hidden" name="id_spk" value="<?php echo $data['id_spk']; ?>">
-				<div class="form-group col-sm-4">
-					<label>Id Spk</label>
-					<br>
-					<select name="id_spk" class="form-control">
-						<option value="1">SPK-001</option>
-						<option value="2">SPK-002</option>
-						<option value="3">SPK-003</option>
-						<option value="4">SPK-004</option>
-						<option value="5">SPK-005</option>
-						<option value="6">SPK-006</option>
-						<option value="7">SPK-007</option>
-						<option value="8">SPK-008</option>
-						<option value="9">SPK-009</option>
-						<option value="10">SPK-010</option>
-					</select>
-				</div>
-
-
-				<div class="form-group col-sm-4">
-					<label> Nama Unit Kerja </label>
-					<input type="text" name="id_unit_kerja" class="form-control" value="<?php echo $data['id_unit_kerja']; ?>">
-				</div>
-
-
-				<div class="form-group col-sm-4">
-					<label> Shift Kerja</label>
-					<input type="text" name="shift_kerja" class="form-control" value="<?php echo $data['shift_kerja']; ?>">
-				</div>
-
-				<div class="form-group col-sm-4 mt-2">
+				<div class="col-md-6">
+					<div class="form-group mt-2">
 					<label>Pilih Bahan Baku</label>
-					<br>
-					<select name="id_bahan_baku" class="form-control">
-						<?php
-						include 'koneksi.php';
-						$id_unit_potong = $_GET['id']; // Mengambil nilai id dari parameter URL
-						$sql_unit_potong = $conn->query("SELECT * FROM unit_potong WHERE id = '$id_unit_potong'");
-						$data_unit_potong = $sql_unit_potong->fetch_assoc();
-						$id_bahan_baku_selected = $data_unit_potong['id_bahan_baku'];
+                                <select name="id_bahan_baku" class="form-control">
+                                    <?php
+                                    $sql_bahan_baku = $conn->query("SELECT bb.id, bb.nama, bb.jumlah_persediaan, bb.jenis 
+                                FROM bahan_baku bb
+                                INNER JOIN (
+                                    SELECT nama, MAX(id) as max_id
+                                    FROM bahan_baku
+                                    WHERE jenis = 'Sheet Paper' -- Filter berdasarkan jenis bahan baku
+                                    GROUP BY nama
+                                ) grouped_bb ON bb.id = grouped_bb.max_id
+                                ORDER BY bb.id DESC");
 
-						$sql_bahan_baku = $conn->query("SELECT * FROM bahan_baku");
-						while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
-							$selected = ($data_bahan_baku['id'] == $id_bahan_baku_selected) ? 'selected' : '';
-							echo '<option value="' . $data_bahan_baku['id'] . '" ' . $selected . '>' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
-						}
-						?>
-					</select>
+                                    while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
+                                        echo '<option value="' . $data_bahan_baku['id'] . '">' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
+                                    }
+                                    ?>
+                                </select>
+					</div>
+
+					<div class="form-group">
+						<label>Tanggal</label>
+						<input type="date" name="tanggal" class="form-control" value="<?php echo $data['tanggal']; ?>">
+					</div>
+
+					<div class="form-group">
+						<label>Total Potong</label>
+						<input type="text" name="total_potong" class="form-control" value="<?php echo $data['total_potong']; ?>" required>
+					</div>
+
+					<div class="form-group">
+						<label>Total Sisir</label>
+						<input type="text" name="total_sisir" class="form-control" value="<?php echo $data['total_sisir']; ?>">
+					</div>
+
+					<div class="form-group">
+						<div class="form-group mt-2">
+						<input type="submit" class="btn btn-primary" value="Update unit potong">
+					</div>
 				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Tanggal</label>
-					<input type="date" name="tanggal" class="form-control" value="<?php echo $data['tanggal']; ?>">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label>Total Potong</label>
-					<input type="number" name="total_potong" class="form-control" value="<?php echo $data['total_potong']; ?>" required>
-				</div>
-
-
-				<div class="form-group col-sm-4">
-					<label> Total Sisir</label>
-					<input type="text" name="total_sisir" class="form-control" value="<?php echo $data['total_sisir']; ?>">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<input type="submit" class="btn btn-primary" value="Update unit potong">
-				</div>
+			</div>
 		</form>
 	</div>
-	</div>
-
-
-
-
-
-
-
-
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -130,7 +126,5 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
-
 </body>
-
 </html>

@@ -20,117 +20,106 @@
 
 </head>
 
-
-
 <body id="bg-gradient-primary">
 	<div class="card shadow">
-		From Edit Unit Finishing
-	</div>
-	<div class="card-body">
-		<?php
-		require 'koneksi.php';
-		$sql = $conn->query("select * from unit_mesin_web where id='$_GET[id]'");
-		$data = $sql->fetch_assoc();
-		?>
-		<form action="update_mesin_web.php" method="post" class="form-herizontal">
-			<div class="form-group col-sm-8">
+		<div class="card-header">
+			From Edit Unit Finishing
+		</div>
+		<div class="card-body">
+			<?php
+			require 'koneksi.php';
+			$sql = $conn->query("select * from unit_mesin_web where id='$_GET[id]'");
+			$data = $sql->fetch_assoc();
+			?>
+			<form action="update_mesin_web.php" method="post" class="form-horizontal">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>id mesin web</label>
+							<input type="text" name="id" class="form-control" value="<?php echo $data['id']; ?>">
+						</div>
+						<div class="form-group">
+							<label>No Spk</label>
+							<select name="id_spk" class="form-control">
+								<?php
+								include 'koneksi.php';
+								$sql_spk = $conn->query("SELECT * FROM spk");
+								while ($data_spk = $sql_spk->fetch_assoc()) {
+									echo '<option value="' . $data_spk['id_spk'] . '">' . $data_spk['no_spk'] . '</option>';
+								}
+								?>
+							</select>
+						</div>
+						<div class="form-group mt-2">
+							<label>Pilih Unit Kerja</label>
+							<select name="id_unit_kerja" class="form-control">
+                        <?php
+                        include 'koneksi.php';
+                        $sql_unit_kerja = $conn->query("SELECT * FROM unit_kerja WHERE jenis_unit_kerja = 'Unit Mesin Web'");
+                        while ($data_unit_kerja = $sql_unit_kerja->fetch_assoc()) {
+                            echo '<option value="' . $data_unit_kerja['id_unit_kerja'] . '">' . $data_unit_kerja['jenis_unit_kerja'] . '</option>';
+                        }
+                        ?>
+                    </select>
+						</div>
+						<div class="form-group mt-2">
+						<label>Pilih Bahan Baku</label>
+				<select name="id_bahan_baku" class="form-control">
+				<?php
+include 'koneksi.php';
+$sql_bahan_baku = $conn->query("SELECT * FROM bahan_baku WHERE jenis = 'paper roll' ORDER BY id DESC");
+$bahan_baku_terbaru = [];
+while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
+    $jenis = $data_bahan_baku['jenis'];
+    if (!isset($bahan_baku_terbaru[$jenis])) {
+        $bahan_baku_terbaru[$jenis] = $data_bahan_baku;
+    }
+}
+foreach ($bahan_baku_terbaru as $data_bahan_baku) {
+    echo '<option value="' . $data_bahan_baku['id'] . '">' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
+}
+?>
 
-				<div class="form-group col-sm-4">
-					<label> id</label>
-					<input type="text" name="id" class="form-control" value="<?php echo $data['id']; ?> ">
+				</select>
+			</div>
+						<div class="form-group">
+							<label>Tanggal</label>
+							<input type="date" name="tanggal" class="form-control" value="<?php echo $data['tanggal']; ?>">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group mt-2">
+							<label>Shift Kerja</label>
+							<select name="shift_kerja" class="form-control">
+								<option value="Pagi">Pagi</option>
+								<option value="Malam">Malam</option>
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label>Jumlah Plat</label>
+							<input type="text" name="jumlah_plat" class="form-control" value="<?php echo $data['jumlah_plat']; ?>">
+						</div>
+						<div class="form-group">
+							<label>Jumlah Catern</label>
+							<input type="text" name="jumlah_catern" class="form-control" value="<?php echo $data['jumlah_catern']; ?>">
+						</div>
+						<div class="form-group">
+							<label>Jumlah Roll</label>
+							<input type="text" name="jumlah_roll" class="form-control" value="<?php echo $data['jumlah_roll']; ?>">
+						</div>
+						<div class="form-group">
+							<label>Hasil Cetak</label>
+							<input type="text" name="hasil_cetak" class="form-control" value="<?php echo $data['hasil_cetak']; ?>">
+						</div>
+					</div>
 				</div>
-
-				<input type="hidden" name="id_spk" value="<?php echo $data['id_spk']; ?>">
-				<div class="form-group col-sm-4">
-					<label>Id Spk</label>
-					<br>
-					<select name="id_spk" class="form-control">
-						<option value="1">SPK-001</option>
-						<option value="2">SPK-002</option>
-						<option value="3">SPK-003</option>
-						<option value="4">SPK-004</option>
-						<option value="5">SPK-005</option>
-						<option value="6">SPK-006</option>
-						<option value="7">SPK-007</option>
-						<option value="8">SPK-008</option>
-						<option value="9">SPK-009</option>
-						<option value="10">SPK-010</option>
-					</select>
-				</div>
-
-
-				<div class="form-group col-sm-4">
-					<label> Nama Unit Kerja </label>
-					<input type="text" name="id_unit_kerja" class="form-control" value="<?php echo $data['id_unit_kerja']; ?> ">
-				</div>
-
-				<div class="form-group col-sm-4 mt-2">
-					<label>Pilih Bahan Baku</label>
-					<br>
-					<select name="id_bahan_baku" class="form-control">
-						<?php
-						include 'koneksi.php';
-						$id_unit_potong = $_GET['id']; // Mengambil nilai id dari parameter URL
-						$sql_unit_potong = $conn->query("SELECT * FROM unit_potong WHERE id = '$id_unit_potong'");
-						$data_unit_potong = $sql_unit_potong->fetch_assoc();
-						$id_bahan_baku_selected = $data_unit_potong['id_bahan_baku'];
-
-						$sql_bahan_baku = $conn->query("SELECT * FROM bahan_baku");
-						while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
-							$selected = ($data_bahan_baku['id'] == $id_bahan_baku_selected) ? 'selected' : '';
-							echo '<option value="' . $data_bahan_baku['id'] . '" ' . $selected . '>' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
-						}
-						?>
-					</select>
-				</div>
-
-
-
-				<div class="form-group col-sm-4">
-					<label> Shift Kerja</label>
-					<input type="text" name="shift_kerja" class="form-control" value="<?php echo $data['shift_kerja']; ?> ">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Tanggal</label>
-					<input type="date" name="tanggal" class="form-control" value="<?php echo $data['tanggal']; ?>">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Jumlah Plat</label>
-					<input type="text" name="jumlah_plat" class="form-control" value="<?php echo $data['jumlah_plat']; ?> ">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Jumlah Catern</label>
-					<input type="text" name="jumlah_catern" class="form-control" value="<?php echo $data['jumlah_catern']; ?> ">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Jumlah Roll</label>
-					<input type="text" name="jumlah_roll" class="form-control" value="<?php echo $data['jumlah_roll']; ?>">
-				</div>
-
-				<div class="form-group col-sm-4">
-					<label> Hasil Cetak</label>
-					<input type="text" name="hasil_cetak" class="form-control" value="<?php echo $data['hasil_cetak']; ?> ">
-				</div>
-
-
-				<div class="form-group col-sm-4">
+				<div class="form-group">
 					<input type="submit" class="btn btn-primary" value="Update Unit Mesin Web">
 				</div>
-		</form>
+			</form>
+		</div>
 	</div>
-	</div>
-
-
-
-
-
-
-
-
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>

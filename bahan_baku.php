@@ -1,13 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
 <?php
 require 'koneksi.php';
 
 $cari = isset($_GET['cari']) ? $_GET['cari'] : '';
 
 // Prepare and execute a safe query
-$stmt = $conn->prepare("SELECT * FROM bahan_baku WHERE nama LIKE CONCAT('%', ?, '%')");
+$stmt = $conn->prepare("
+    SELECT bb.* 
+    FROM bahan_baku bb
+    INNER JOIN (
+        SELECT nama, MAX(created_at) AS max_created_at 
+        FROM bahan_baku 
+        GROUP BY nama
+    ) grouped_bb 
+    ON bb.nama = grouped_bb.nama AND bb.created_at = grouped_bb.max_created_at
+    WHERE bb.nama LIKE CONCAT('%', ?, '%')
+");
 $stmt->bind_param("s", $cari);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -15,14 +22,22 @@ $data = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 ?>
 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Bahan Baku</title>
     <style>
         .action-buttons {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            justify-content: center; /* Center the buttons */
+        }
+
+        .action-buttons .btn {
+            width: 120px; /* Set the button width */
         }
     </style>
 </head>
@@ -63,23 +78,25 @@ $stmt->close();
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
-                            <th>ID</th>
+                        <tr class="text-center">
+                            <th>Nomor Urut</th>
                             <th>Kode Bahan Baku</th>
                             <th>Nama Bahan Baku</th>
                             <th>Satuan</th>
                             <th>Jenis</th>
-                            <th>Harga per Satuan</th>
+                            <th>Harga satuan</th>
                             <th>Jumlah Persediaan</th>
                             <th>Tanggal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($data)) : ?>
+                        <?php 
+                        $nomor_urut = 1; // initialize row number
+                        if (!empty($data)) : ?>
                             <?php foreach ($data as $row) : ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                    <td><?php echo $nomor_urut++; ?></td>
                                     <td><?php echo !empty($row['kode_bahan_baku']) ? htmlspecialchars($row['kode_bahan_baku']) : '-'; ?></td>
                                     <td><?php echo htmlspecialchars($row['nama']); ?></td>
                                     <td><?php echo htmlspecialchars($row['satuan']); ?></td>
@@ -119,7 +136,7 @@ $stmt->close();
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td class="text-center" colspan="6">Tidak ada data yang ditemukan</td>
+                                <td class="text-center" colspan="9">Tidak ada data yang ditemukan</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

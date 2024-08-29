@@ -27,7 +27,9 @@ if (isset($_GET['url'])) {
 			include 'hapus_spk.php';
 			break;
 
-
+		case 'bahan_baku':
+			include 'bahan_baku_pracetak.php';
+			break;
 
 		default:
 			echo "selamat datang di Admin pra cetak";

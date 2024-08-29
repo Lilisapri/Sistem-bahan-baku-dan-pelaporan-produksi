@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Laporan Mesin Web</title>
 </head>
 <script>
@@ -59,7 +59,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>Nomor urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -72,23 +72,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <?php
-                require 'koneksi.php';
+              <?php
+              require 'koneksi.php';
 
-                $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
-                $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
+              $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
+              $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
 
-                $sql = "SELECT id,no_spk, jenis_unit_kerja,judul_buku,ms.tanggal,shift_kerja,ms.jumlah_plat,ms.jumlah_catern,jumlah_roll,hasil_cetak
-                        FROM unit_mesin_web ms
-                        INNER JOIN spk ON ms.id_spk = spk.id_spk
-                        INNER JOIN unit_kerja ON ms.id_unit_kerja = unit_kerja.id_unit_kerja
-                        WHERE ms.`tanggal` >= '$awal' AND ms.`tanggal` <= '$akhir'";
-                $result = mysqli_query($conn, $sql);
-                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                foreach ($data as $data) {
-                ?>
-                  <td><?php echo $data['id']; ?></td>
+              $sql = "SELECT id,no_spk, jenis_unit_kerja,judul_buku,ms.tanggal,shift_kerja,ms.jumlah_plat,ms.jumlah_catern,jumlah_roll,hasil_cetak
+                      FROM unit_mesin_web ms
+                      INNER JOIN spk ON ms.id_spk = spk.id_spk
+                      INNER JOIN unit_kerja ON ms.id_unit_kerja = unit_kerja.id_unit_kerja
+                      WHERE ms.`tanggal` >= '$awal' AND ms.`tanggal` <= '$akhir'";
+              $result = mysqli_query($conn, $sql);
+              $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              $nomor_urut = 1; // Inisialisasi nomor urut
+
+              foreach ($data as $data) {
+              ?>
+                <tr>
+                  <td><?php echo $nomor_urut++; ?></td>
                   <td><?php echo $data['no_spk']; ?></td>
                   <td><?php echo $data['jenis_unit_kerja']; ?></td>
                   <td><?php echo $data['judul_buku']; ?></td>
@@ -98,10 +100,10 @@
                   <td><?php echo $data['jumlah_catern']; ?></td>
                   <td><?php echo $data['jumlah_roll']; ?></td>
                   <td><?php echo $data['hasil_cetak']; ?></td>
-              </tr>
-            <?php } ?>
+                </tr>
+              <?php } ?>
+            </tbody>
           </table>
-          </td>
         </div>
       </div>
     </div>

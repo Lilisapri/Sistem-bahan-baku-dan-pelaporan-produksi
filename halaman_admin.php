@@ -245,11 +245,14 @@ if (isset($_GET['url'])) {
 			include 'hapus_mesin_web.php';
 			break;
 
+
 		case 'laporan_mesin_web':
 			include 'laporan_mesin_web.php';
 			break;
 
-
+			case 'laporan_bahan_baku':
+				include 'laporan_bahan_baku.php';
+				break;
 
 		default:
 			echo "selamat datang di halaman Staf Admin";

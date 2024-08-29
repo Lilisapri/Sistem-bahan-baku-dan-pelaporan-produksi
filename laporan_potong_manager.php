@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Untitled Document</title>
 </head>
 <script>
@@ -29,7 +29,7 @@
     <div class="card shadow mb-4">
       <!-- <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Data Laporan Unit Potong</h6>
-	
+  
             
             </div> -->
 
@@ -68,7 +68,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>Nomor urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -79,27 +79,29 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <?php
-                require 'koneksi.php';
-                if (isset($_GET['awal'])) {
-                  $awal = $_GET['awal'];
-                  $akhir = $_GET['akhir'];
-                  $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,up.tanggal,shift_kerja,total_potong,total_sisir
+              <?php
+              require 'koneksi.php';
+              if (isset($_GET['awal'])) {
+                $awal = $_GET['awal'];
+                $akhir = $_GET['akhir'];
+                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,up.tanggal,shift_kerja,total_potong,total_sisir
       FROM unit_potong up
       INNER JOIN spk ON up.id_spk = spk.id_spk
       INNER JOIN unit_kerja ON up.id_unit_kerja = unit_kerja.`id_unit_kerja` WHERE up.`tanggal` >= '$awal' AND up.`tanggal` <= '$akhir';";
-                } else {
-                  $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,up.tanggal,shift_kerja,total_potong,total_sisir
+              } else {
+                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,up.tanggal,shift_kerja,total_potong,total_sisir
     FROM unit_potong up
     INNER JOIN spk ON up.id_spk = spk.id_spk
     INNER JOIN unit_kerja ON up.id_unit_kerja = unit_kerja.`id_unit_kerja`;";
-                }
-                $result = mysqli_query($conn, $sql);
-                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                foreach ($data as $data) {
-                ?>
-                  <td><?php echo $data['id']; ?></td>
+              }
+              $result = mysqli_query($conn, $sql);
+              $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              $nomorUrut = 1;
+              foreach ($data as $data) {
+              ?>
+                <tr>
+                  <td><?php echo $nomorUrut++; ?></td>
+                 
                   <td><?php echo $data['no_spk']; ?></td>
                   <td><?php echo $data['jenis_unit_kerja']; ?></td>
                   <td><?php echo $data['judul_buku']; ?></td>
@@ -107,21 +109,14 @@
                   <td><?php echo $data['shift_kerja']; ?></td>
                   <td><?php echo $data['total_potong']; ?></td>
                   <td><?php echo $data['total_sisir']; ?></td>
-
-
-
-              </tr>
-            <?php  } ?>
+                </tr>
+              <?php  } ?>
+            </tbody>
           </table>
-          </td>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
 </body>
 
 </html>

@@ -63,10 +63,10 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Master Data:</h6>
-            <a class="collapse-item" href="?url=bahan_baku">Bahan Baku</a>
-            <a class="collapse-item" href="?url=spk_s_admin">SPK</a>
             <a class="collapse-item" href="?url=pengguna">Pengguna</a>
-
+            <a class="collapse-item" href="?url=spk_s_admin">SPK</a>
+            <a class="collapse-item" href="?url=bahan_baku">Bahan Baku</a>
+            <a class="collapse-item" href="?url=laporan_bahan_baku">Riwayat Bahan Baku</a>
           </div>
         </div>
       </li>
@@ -116,6 +116,8 @@
           </div>
         </div>
       </li>
+      </li>
+     
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -131,6 +133,7 @@
           <i class="fas fa-fw fa-lock"></i>
           <span>Sing-Out</span></a>
       </li>
+
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -152,7 +155,7 @@
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <div>
-            <h4> Sistem Informasi Laporan Produksi</h4>
+            <h4><b>Sistem Informasi Persediaan Bahan Baku Dan Pelaporan Produksi</b></h4>
           </div>
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">

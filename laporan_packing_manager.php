@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Laporan Packing</title>
 </head>
 <script>
@@ -59,7 +59,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>Nomor urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -69,33 +69,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <?php
-                require 'koneksi.php';
+              <?php
+              require 'koneksi.php';
 
-                $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
-                $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
+              $awal = isset($_GET['awal']) && !empty($_GET['awal']) ? $_GET['awal'] : '1900-01-01';
+              $akhir = isset($_GET['akhir']) ? $_GET['akhir'] : date('Y-m-d');
 
-                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,pcg.tanggal,shift_kerja,total_buku
-                        FROM unit_packing pcg
-                        INNER JOIN spk ON pcg.id_spk = spk.id_spk
-                        INNER JOIN unit_kerja ON pcg.id_unit_kerja = unit_kerja.`id_unit_kerja`
-                        WHERE pcg.`tanggal` >= '$awal' AND pcg.`tanggal` <= '$akhir'";
-                $result = mysqli_query($conn, $sql);
-                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                foreach ($data as $data) {
-                ?>
-                  <td><?php echo $data['id']; ?></td>
+              $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,pcg.tanggal,shift_kerja,total_buku
+                      FROM unit_packing pcg
+                      INNER JOIN spk ON pcg.id_spk = spk.id_spk
+                      INNER JOIN unit_kerja ON pcg.id_unit_kerja = unit_kerja.`id_unit_kerja`
+                      WHERE pcg.`tanggal` >= '$awal' AND pcg.`tanggal` <= '$akhir'";
+              $result = mysqli_query($conn, $sql);
+
+              // Inisialisasi nomor urut
+              $nomor_urut = 1;
+
+              while ($data = mysqli_fetch_assoc($result)) {
+              ?>
+                <tr>
+                  <td><?php echo $nomor_urut++; ?></td>
                   <td><?php echo $data['no_spk']; ?></td>
                   <td><?php echo $data['jenis_unit_kerja']; ?></td>
                   <td><?php echo $data['judul_buku']; ?></td>
                   <td><?php echo $data['tanggal']; ?></td>
                   <td><?php echo $data['shift_kerja']; ?></td>
                   <td><?php echo $data['total_buku']; ?></td>
-              </tr>
-            <?php } ?>
+                </tr>
+              <?php } ?>
+            </tbody>
           </table>
-          </td>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Untitled Document</title>
 </head>
 <script>
@@ -29,41 +29,41 @@
     <div class="card shadow mb-4">
 
       <div class="card-header">
-        <h5 class="m-0 font-weight-bold text-primary">Laporan Unit Cetak c</h6>
-          <form method="GET" action="manager.php">
-            <input type="hidden" name="url" value="laporan_cetak_manager">
-            <div class="d-flex flex-row-reverse">
-              <div class="p-2">
-                <button type="button" class="btn btn-primary" onclick="cetakLaporan()"><i class="fa fa-print"></i> Cetak</button>
-              </div>
-              <div class="p-2">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filter</button>
-              </div>
-              <div class="p-2">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="mdi mdi-calendar-month"></i></span>
-                  </div>
-                  <input type="date" class="form-control" name="akhir" value="<?php echo date('Y-m-d'); ?>">
+        <h5 class="m-0 font-weight-bold text-primary">Laporan Unit Cetak </h5>
+        <form method="GET" action="manager.php">
+          <input type="hidden" name="url" value="laporan_cetak_manager">
+          <div class="d-flex flex-row-reverse">
+            <div class="p-2">
+              <button type="button" class="btn btn-primary" onclick="cetakLaporan()"><i class="fa fa-print"></i> Cetak</button>
+            </div>
+            <div class="p-2">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+            <div class="p-2">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="mdi mdi-calendar-month"></i></span>
                 </div>
-              </div>
-              <div class="p-2">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="mdi mdi-calendar-month"></i></span>
-                  </div>
-                  <input type="date" class="form-control" name="awal" value="<?php echo isset($_GET['awal']) ? $_GET['awal'] : ''; ?>" required>
-                </div>
+                <input type="date" class="form-control" name="akhir" value="<?php echo date('Y-m-d'); ?>">
               </div>
             </div>
-          </form>
+            <div class="p-2">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="mdi mdi-calendar-month"></i></span>
+                </div>
+                <input type="date" class="form-control" name="awal" value="<?php echo isset($_GET['awal']) ? $_GET['awal'] : ''; ?>" required>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>Nomor urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -75,28 +75,29 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <?php
-                require 'koneksi.php';
-                if (isset($_GET['awal'])) {
-                  $awal = $_GET['awal'];
-                  $akhir = $_GET['akhir'];
-                  $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
+              <?php
+              require 'koneksi.php';
+              if (isset($_GET['awal'])) {
+                $awal = $_GET['awal'];
+                $akhir = $_GET['akhir'];
+                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
        FROM unit_cetak uc
        INNER JOIN spk ON uc.id_spk = spk.id_spk
        INNER JOIN unit_kerja ON uc.id_unit_kerja = unit_kerja.`id_unit_kerja`WHERE uc.`tanggal` >= '$awal' AND uc.`tanggal` <= '$akhir';";
-                } else {
-                  $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
+              } else {
+                $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
     FROM unit_cetak uc
     INNER JOIN spk ON uc.id_spk = spk.id_spk
     INNER JOIN unit_kerja ON uc.id_unit_kerja = unit_kerja.`id_unit_kerja`";
-                }
+              }
 
-                $result = mysqli_query($conn, $sql);
-                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                foreach ($data as $data) {
-                ?>
-                  <td><?php echo $data['id']; ?></td>
+              $result = mysqli_query($conn, $sql);
+              $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              $nomor_urut = 1; // Nomor urut awal
+              foreach ($data as $data) {
+              ?>
+                <tr>
+                  <td><?php echo $nomor_urut; ?></td>
                   <td><?php echo $data['no_spk']; ?></td>
                   <td><?php echo $data['jenis_unit_kerja']; ?></td>
                   <td><?php echo $data['judul_buku']; ?></td>
@@ -105,13 +106,16 @@
                   <td><?php echo $data['total_catern']; ?></td>
                   <td><?php echo $data['total_plat']; ?></td>
                   <td><?php echo $data['total_lembar']; ?></td>
-
-
-              </tr>
-            <?php  } ?>
+                </tr>
+              <?php
+                $nomor_urut++; // Increment nomor urut
+              } ?>
+            </tbody>
           </table>
-          </td>
         </div>
       </div>
     </div>
   </div>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Untitled Document</title>
 </head>
 
@@ -15,8 +15,8 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Data Laporan Unit Stahl</h6>
-			  <br>
-		<a href="s_admin.php?url=tambah_stahl" class="btn btn-primary btn-icon-split">
+              <br>
+              <a href="s_admin.php?url=tambah_stahl" class="btn btn-primary btn-icon-split">
                     <span class="icon text-white-50">
                       <i class="fas fa-plus"></i>
                     </span>
@@ -27,54 +27,50 @@
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
-                    <tr>
+                    <tr class="text-center">
+                      <th>Nomor</th>
                     
-                      <th>ID</th>
-                     <th>Tanggal</th>
-                     <th>hasil_lipat</th>
-					 <th>Aksi</th>
+                      <th>Tanggal</th>
+                      <th>Hasil Lipat</th>
+                      <th>Aksi</th>
                     </tr>
-                    </thead>
-		<tbody>
-	<tr>
-		<?php
-		require 'koneksi.php';
-		$sql="select * from unit_stahl";
-		$result = mysqli_query($conn,$sql);
-		$data = mysqli_fetch_all($result,MYSQLI_ASSOC);
-		foreach ($data as $data)
-		{
-		?>
-                     
-                      <td><?php echo $data['id']; ?></td>
-                       <td><?php echo $data['tanggal']; ?></td>
-                       <td><?php echo $data['hasil_lipat']; ?></td>
-					   <td><a href="s_admin.php?url=edit_stahl&id=<?php echo $data['id']; ?>" class="btn btn-success btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-edit"></i>
-                    </span>
-                    <span class="text">Edit</span>
-                  </a>
-				  
-				  <a href="hapus_stahl.php?id=<?php echo $data ['id']; ?> " class="btn btn-danger btn-icon-split" onclick="return confirm('yakin hapus')">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-trash"></i>
-                    </span>
-                    <span class="text">Hapus</span>
-                  </a>
-				  </td>
-				  
-				  
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <?php
+                    require 'koneksi.php';
+                    $sql = "SELECT * FROM unit_stahl";
+                    $result = mysqli_query($conn, $sql);
+                    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    $nomor = 1; // Initialize the counter
+                    foreach ($data as $row) {
+                  ?>
+                      <td class="text-center"><?php echo $nomor++; ?></td> <!-- Display the row number -->
+                      
+                      <td><?php echo $row['tanggal']; ?></td>
+                      <td><?php echo $row['hasil_lipat']; ?></td>
+                      <td class="text-center">
+                        <a href="s_admin.php?url=edit_stahl&id=<?php echo $row['id']; ?>" class="btn btn-success btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span class="text">Edit</span>
+                        </a>
+                        <a href="hapus_stahl.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-icon-split" onclick="return confirm('Yakin hapus?')">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                          <span class="text">Hapus</span>
+                        </a>
+                      </td>
                     </tr>
-				  <?php  }?>
-				  </table></td>
-				</div>
-			</div>
-		</div>
-	</div>
- 
-										
-
+                  <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+</div>
 
 </body>
 </html>

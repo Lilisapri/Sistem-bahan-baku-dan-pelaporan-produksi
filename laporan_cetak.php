@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Untitled Document</title>
 </head>
 <script>
@@ -29,7 +29,7 @@
     <div class="card shadow mb-4">
 
       <div class="card-header">
-        <h5 class="m-0 font-weight-bold text-primary">Laporan Unit Cetak c</h6>
+        <h5 class="m-0 font-weight-bold text-primary">Laporan Unit Cetak </h5>
           <form method="GET" action="s_admin.php">
             <input type="hidden" name="url" value="laporan_cetak">
             <div class="d-flex flex-row-reverse">
@@ -63,7 +63,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No</th>
+                <th>No urut</th>
                 <th>No SPK</th>
                 <th>Jenis Unit Kerja</th>
                 <th>Judul Buku</th>
@@ -84,7 +84,8 @@
                   $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
        FROM unit_cetak uc
        INNER JOIN spk ON uc.id_spk = spk.id_spk
-       INNER JOIN unit_kerja ON uc.id_unit_kerja = unit_kerja.`id_unit_kerja`WHERE uc.`tanggal` >= '$awal' AND uc.`tanggal` <= '$akhir';";
+       INNER JOIN unit_kerja ON uc.id_unit_kerja = unit_kerja.`id_unit_kerja`
+       WHERE uc.`tanggal` >= '$awal' AND uc.`tanggal` <= '$akhir';";
                 } else {
                   $sql = "SELECT id,no_spk,jenis_unit_kerja,judul_buku,uc.tanggal,shift_kerja,total_catern,total_plat,total_lembar
     FROM unit_cetak uc
@@ -94,9 +95,12 @@
 
                 $result = mysqli_query($conn, $sql);
                 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+                $no_urut = 1; // Initialize the counter for "No urut"
                 foreach ($data as $data) {
                 ?>
-                  <td><?php echo $data['id']; ?></td>
+                  <td><?php echo $no_urut++; ?></td> <!-- Increment counter for each row -->
+                  
                   <td><?php echo $data['no_spk']; ?></td>
                   <td><?php echo $data['jenis_unit_kerja']; ?></td>
                   <td><?php echo $data['judul_buku']; ?></td>
@@ -110,8 +114,10 @@
               </tr>
             <?php  } ?>
           </table>
-          </td>
         </div>
       </div>
     </div>
   </div>
+</body>
+
+</html>

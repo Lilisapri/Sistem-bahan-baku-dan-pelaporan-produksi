@@ -65,6 +65,21 @@
             .no-print {
                 display: none;
             }
+
+            .footer {
+                margin-top: 50px;
+                text-align: right;
+            }
+
+            .footer img {
+                max-width: 80px; /* Atur lebar maksimum gambar */
+                height: auto; /* Biarkan tinggi gambar menyesuaikan proporsi */
+                margin-top: 20px;
+            }
+        }
+
+        .signatories {
+            text-align: right;
         }
     </style>
 </head>
@@ -84,7 +99,6 @@
         <?php
         require 'koneksi.php';
 
-
         if (isset($_GET['id_spk'])) {
             $id_spk = $_GET['id_spk'];
 
@@ -98,14 +112,7 @@
             if ($data) {
         ?>
                 <table>
-                    <tr>
-                        <th>ID SPK</th>
-                        <td><?php echo $data['id_spk']; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Nama Pengguna</th>
-                        <td><?php echo $data['nama_user']; ?></td>
-                    </tr>
+                    
                     <tr>
                         <th>No SPK</th>
                         <td><?php echo $data['no_spk']; ?></td>
@@ -143,6 +150,10 @@
                         <td><?php echo $data['jumlah_halaman']; ?></td>
                     </tr>
                     <tr>
+						<th>Model catern</th>
+                        <td><?php echo $data['model_catern']; ?></td>
+                    </tr>
+                    <tr>
                         <th>Jumlah Catern</th>
                         <td><?php echo $data['jumlah_catern']; ?></td>
                     </tr>
@@ -172,6 +183,14 @@
             echo "ID SPK tidak ditemukan.";
         }
         ?>
+        <div class="footer">
+            <div class="signatories">
+                <p>Penanggung Jawab</p>
+                <p>Admin Pra-Cetak</p>
+                <img src="/img/ttd_pra.png" alt="Pranowo" style="max-width: 150px; height: auto;">
+                <p>Sri Utami</p>
+            </div>
+        </div>
     </div>
 </body>
 

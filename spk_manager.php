@@ -20,13 +20,14 @@
 
 </head>
 
-<body id="page-top">
-
-	<div class="card shadow">
-		<div class="card-header">
-			Data SPK
-			<br>
-			<br>
+<body>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Data SPK</h6>
+                <br>
 
 		</div>
 		<div class="card-body">
@@ -34,7 +35,7 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Id</th>
+							<th>Nomor Urut</th>
 							<th>No SPK</th>
 							<th>Judul Cetak</th>
 							<th>Tanggal</th>
@@ -44,15 +45,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<?php
-							require 'koneksi.php';
-							$sql = "select * from spk";
-							$result = mysqli_query($conn, $sql);
-							$data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-							foreach ($data as $data) {
-							?>
-								<td><?php echo $data['id_spk']; ?></td>
+						<?php
+						require 'koneksi.php';
+						$sql = "select * from spk";
+						$result = mysqli_query($conn, $sql);
+						$data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+						$nomor_urut = 1; // Inisialisasi nomor urut
+						foreach ($data as $data) {
+						?>
+							<tr>
+								<td><?php echo $nomor_urut++; ?></td> <!-- Menampilkan dan menaikkan nomor urut setiap kali loop -->
 								<td><?php echo $data['no_spk']; ?></td>
 								<td><?php echo $data['judul_buku']; ?></td>
 								<td><?php echo $data['tanggal']; ?></td>
@@ -65,8 +67,8 @@
 										<span class="text">Unduh</span>
 									</a>
 								</td>
-						</tr>
-					<?php } ?>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>

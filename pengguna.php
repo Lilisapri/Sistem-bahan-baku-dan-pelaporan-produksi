@@ -28,7 +28,7 @@
          <div class="table-responsive">
            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
              <thead>
-               <tr>
+               <tr class= "text-center">
 
                  <th>ID Pengguna</th>
                  <th>Nama User</th>
@@ -53,8 +53,8 @@
                    <td><?php echo $data['username']; ?></td>
                    <td><?php echo $data['password']; ?></td>
                    <td><?php echo $data['level']; ?></td>
-                   <td><a href="s_admin.php?url=edit_pengguna&id_pengguna=<?php echo $data['id_pengguna']; ?>" class="btn btn-success btn-icon-split">
-                       <span class="icon text-white-50">
+                   <td class= "text-center"><a href="s_admin.php?url=edit_pengguna&id_pengguna=<?php echo $data['id_pengguna']; ?>" class="btn btn-success btn-icon-split">
+                   <span class="icon text-white-50">
                          <i class="fas fa-edit"></i>
                        </span>
                        <span class="text">Edit</span>

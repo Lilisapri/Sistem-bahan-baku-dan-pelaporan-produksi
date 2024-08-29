@@ -3,125 +3,149 @@
 
 <head>
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<title>Staf Admin</title>
+    <title>Staf Admin</title>
 
-	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-	<!-- Custom styles for this template-->
-	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
-<body Id="page-top">
+<body id="page-top">
 
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header">
+                Form Tambah Laporan Unit Potong
+            </div>
+            <div class="card-body">
+                <form action="simpan_potong.php" method="post" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Id Spk</label>
+                                <select name="id_spk" class="form-control">
+                                    <?php
+                                    include 'koneksi.php';
+                                    $sql_spk = $conn->query("SELECT * FROM spk");
+                                    while ($data_spk = $sql_spk->fetch_assoc()) {
+                                        echo '<option value="' . $data_spk['id_spk'] . '">' . $data_spk['no_spk'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Pilih Unit Kerja</label>
+                                <select name="id_unit_kerja" class="form-control">
+								<?php
+$sql_unit_kerja = $conn->query("SELECT * FROM unit_kerja WHERE jenis_unit_kerja = 'Unit Potong'");
+while ($data_unit_kerja = $sql_unit_kerja->fetch_assoc()) {
+    echo '<option value="' . $data_unit_kerja['id_unit_kerja'] . '">' . $data_unit_kerja['jenis_unit_kerja'] . '</option>';
+}
+?>
 
-	<div class="card shadow">
-		<div class="card-header">
-			Form Tambah Laporan Unit Potong
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Pilih Bahan Baku</label>
+                                <select name="id_bahan_baku" class="form-control">
+                                    <?php
+                                    $sql_bahan_baku = $conn->query("SELECT bb.id, bb.nama, bb.jumlah_persediaan, bb.jenis 
+                                FROM bahan_baku bb
+                                INNER JOIN (
+                                    SELECT nama, MAX(id) as max_id
+                                    FROM bahan_baku
+                                    WHERE jenis = 'Sheet Paper' -- Filter berdasarkan jenis bahan baku
+                                    GROUP BY nama
+                                ) grouped_bb ON bb.id = grouped_bb.max_id
+                                ORDER BY bb.id DESC");
 
-			<form action="simpan_potong.php" method="post" class="form-herizontal">
-		</div>
+                                    while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
+                                        echo '<option value="' . $data_bahan_baku['id'] . '">' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Shift Kerja</label>
+                                <select name="shift_kerja" class="form-control">
+                                    <option value="Pagi">Pagi</option>
+                                    <option value="Malam">Malam</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" id="tanggal">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Total Potong</label>
+                                <input type="text" name="total_potong" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Total Sisir</label>
+                                <input type="number" name="total_sisir" placeholder="Masukkan angka total sisir" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-		<div class="form-group col-sm-4">
-			<label>Id Spk</label>
-			<br>
-			<select name="id_spk" class="form-control">
-				<option value="1">SPK-001</option>
-				<option value="2">SPK-002</option>
-				<option value="3">SPK-003</option>
-				<option value="4">SPK-004</option>
-				<option value="5">SPK-005</option>
-				<option value="6">SPK-006</option>
-				<option value="7">SPK-007</option>
-				<option value="8">SPK-008</option>
-				<option value="9">SPK-009</option>
-				<option value="10">SPK-010</option>
-			</select>
-		</div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		<div class="from-group col-sm-4">
-			<label>Pilih Unit Kerja</label>
-			<br>
-			<select name="id_unit_kerja" class="form-control">
-				<option value="1">Unit Potong</option>
-				<option value="2">Unit Cetak</option>
-				<option value="3">Unit Stahl</option>
-				<option value="4">Unit Finishing</option>
-				<option value="5">Unit Bindding</option>
-				<option value="6">Unit Packing</option>
-				<option value="7">Unit Mesin Web</option>
-			</select>
-		</div>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-		<div class="form-group col-sm-4 mt-2">
-			<label>Pilih Bahan Baku</label>
-			<br>
-			<select name="id_bahan_baku" class="form-control">
-				<?php
-				include 'koneksi.php';
-				$sql_bahan_baku = $conn->query("SELECT * FROM bahan_baku");
-				while ($data_bahan_baku = $sql_bahan_baku->fetch_assoc()) {
-					echo '<option value="' . $data_bahan_baku['id'] . '">' . $data_bahan_baku['nama'] . ' [ Stok: ' . $data_bahan_baku['jumlah_persediaan'] . ' ] [ Jenis: ' . $data_bahan_baku['jenis'] . ' ]</option>';
-				}
-				?>
-			</select>
-		</div>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-		<div class="form-group col-sm-4">
-			<label>Shift Kerja</label>
-			<br>
-			<select name="shift_kerja" class="form-control">
-				<option value="Pagi">Pagi</option>
-				<option value="Malam">Malam</option>
-			</select>
-		</div>
+    <script>
+        // Get today's date
+        var today = new Date();
+        
+        // Format the date to YYYY-MM-DD
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        var yyyy = today.getFullYear();
 
-		<div class="form-group col-sm-4">
-			<label>Tanggal</label>
-			<br>
-			<input type="date" name="tanggal" class="form-control">
-		</div>
-
-		<div class="form-group col-sm-4">
-			<label>Total Potong</label>
-			<br>
-			<input type="number" name="total_potong" class="form-control" placeholder="Masukkan angka total potong" required>
-		</div>
-
-		<div class="form-group col-sm-4">
-			<label>Total Sisir</label>
-			<br>
-			<input type="number" name="total_sisir" placeholder="Masukkan angka total sisir" class="form-control">
-		</div>
-
-		<br>
-		<div class="from-group col-sm4">
-			<input type="submit" class="btn btn-primary" value="Simpan">
-		</div>
-		</form>
-	</div>
-
-
-
-
-
-	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
+        // Set the min and max attributes of the date input to today's date
+        document.getElementById("tanggal").setAttribute("min", yyyy + "-" + mm + "-" + dd);
+        document.getElementById("tanggal").setAttribute("max", yyyy + "-" + mm + "-" + dd);
+    </script>
 
 </body>
 

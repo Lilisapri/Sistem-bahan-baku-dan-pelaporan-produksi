@@ -26,6 +26,12 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <title>Cetak Laporan Unit Bindding</title>
     <style>
+        .container {
+            max-width: 4000px;
+            margin: 0 auto;
+            padding: 0px;
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -66,6 +72,21 @@ if (mysqli_num_rows($result) > 0) {
         th {
             background-color: #f2f2f2;
         }
+
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .footer img {
+            width: 100px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .signatories {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -76,8 +97,8 @@ if (mysqli_num_rows($result) > 0) {
             <div class="company-info">
                 CV. GALAXY MEDIA ILMU<br>
                 GALAXY OFFSET (Percetakan)<br>
-                Alamat: RT.05 Ds. Blali, Selobanteng, Pungging, Bantul, DIY 55771<br>
-                Cp: 081327575687 email: masteryudha85@gmail.com
+                Alamat: RT.05 Ds. Blali, Seloharjo, Pundong, Bantul, DIY 55771<br>
+                Cp: 081327575687 email: Galaxymedia@gmail.com
             </div>
         </div>
         <h2>Laporan Unit Bindding</h2>
@@ -85,7 +106,7 @@ if (mysqli_num_rows($result) > 0) {
         <table>
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>Nomor urut</th>
                     <th>No SPK</th>
                     <th>Jenis Unit Kerja</th>
                     <th>Judul Buku</th>
@@ -95,20 +116,31 @@ if (mysqli_num_rows($result) > 0) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data as $data) { ?>
+                <?php 
+                $nomor_urut = 1; // Inisialisasi nomor urut
+                foreach ($data as $item) { // Ubah $data menjadi $item untuk mencegah konflik nama variabel
+                ?>
                     <tr>
-                        <td><?php echo $data['id']; ?></td>
-                        <td><?php echo $data['no_spk']; ?></td>
-                        <td><?php echo $data['jenis_unit_kerja']; ?></td>
-                        <td><?php echo $data['judul_buku']; ?></td>
-                        <td><?php echo $data['tanggal']; ?></td>
-                        <td><?php echo $data['shift_kerja']; ?></td>
-                        <td><?php echo $data['jumlah_bindding']; ?></td>
+                        <td><?php echo $nomor_urut++; ?></td> <!-- Gunakan $nomor_urut dan tingkatkan nilainya setiap kali loop -->
+                        <td><?php echo $item['no_spk']; ?></td>
+                        <td><?php echo $item['jenis_unit_kerja']; ?></td>
+                        <td><?php echo $item['judul_buku']; ?></td>
+                        <td><?php echo $item['tanggal']; ?></td>
+                        <td><?php echo $item['shift_kerja']; ?></td>
+                        <td><?php echo $item['jumlah_bindding']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
-        <br>
+
+        <div class="footer">
+            <div class="signatories">
+                <p>Penanggung Jawab</p>
+                <p>Staf Admin</p>
+                <img src="/img/ttd.png" alt="Pranowo">
+                <p>Pranowo</p>
+            </div>
+        </div>
     </div>
 </body>
 

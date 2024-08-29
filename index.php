@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sistem laporan produksi</title>
+  <title>Sistem Informasi Persediaan Bahan Baku Dan Pelaporan Produksi</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -17,6 +17,25 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
+
+  <style>
+    .card {
+      border-radius: 80px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Efek lekungan */
+    }
+
+    .form-control {
+      border-radius: 10px;
+    }
+
+    .bg-gradient-primary {
+      background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    }
+
+    .card-body {
+      margin-top: 30px; /* Pindahkan card ke atas */
+    }
+  </style>
 
 </head>
 
@@ -37,8 +56,8 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Form Login</h1>
-                    <h2 class="h4 text-gray-900 mb-4">Silahkan Login</h2>
+                    <h1 class="h4 text-gray-900 mb-4"><b>Halaman Login</b></h1>
+                    <h2 class="h4 text-gray-900 mb-4"><b>CV Galaxy Media Ilmu</b></h2>
                   </div>
                   <form class="user" action="cek_login.php" method="post">
                     <div class="form-group">
@@ -50,7 +69,7 @@
 
 
                     <hr>
-                    <button type="submid" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
                       Login
                     </button>
                   </form>

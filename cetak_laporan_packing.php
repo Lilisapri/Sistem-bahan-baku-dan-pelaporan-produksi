@@ -26,6 +26,12 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <title>Cetak Laporan Unit Packing</title>
     <style>
+        .container {
+            max-width: 4000px;
+            margin: 0 auto;
+            padding: 0px;
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -66,6 +72,21 @@ if (mysqli_num_rows($result) > 0) {
         th {
             background-color: #f2f2f2;
         }
+
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .footer img {
+            width: 100px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .signatories {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -76,8 +97,8 @@ if (mysqli_num_rows($result) > 0) {
             <div class="company-info">
                 CV. GALAXY MEDIA ILMU<br>
                 GALAXY OFFSET (Percetakan)<br>
-                Alamat: RT.05 Ds. Blali, Selobanteng, Pungging, Bantul, DIY 55771<br>
-                Cp: 081327575687 email: masteryudha85@gmail.com
+                Alamat: RT.05 Ds. Blali, Seloharjo, Pundong, Bantul, DIY 55771<br>
+                Cp: 081327575687 email: Galaxymedia@gmail.com
             </div>
         </div>
         <h2>Laporan Unit Packing</h2>
@@ -85,7 +106,7 @@ if (mysqli_num_rows($result) > 0) {
         <table>
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>Nomor urut </th>
                     <th>No SPK</th>
                     <th>Jenis Unit Kerja</th>
                     <th>Judul Buku</th>
@@ -95,9 +116,12 @@ if (mysqli_num_rows($result) > 0) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data as $data) { ?>
+                <?php
+                $counter = 1; // Inisialisasi counter nomor urut
+                foreach ($data as $data) {
+                ?>
                     <tr>
-                        <td><?php echo $data['id']; ?></td>
+                        <td><?php echo $counter++; ?></td>
                         <td><?php echo $data['no_spk']; ?></td>
                         <td><?php echo $data['jenis_unit_kerja']; ?></td>
                         <td><?php echo $data['judul_buku']; ?></td>
@@ -105,10 +129,19 @@ if (mysqli_num_rows($result) > 0) {
                         <td><?php echo $data['shift_kerja']; ?></td>
                         <td><?php echo $data['total_buku']; ?></td>
                     </tr>
-                <?php } ?>
+                <?php
+                }
+                ?>
             </tbody>
         </table>
-        <br>
+        <div class="footer">
+            <div class="signatories">
+                <p>Penanggung Jawab</p>
+                <p>Staf Admin</p>
+                <img src="/img/ttd.png" alt="Pranowo">
+                <p>Pranowo</p>
+            </div>
+        </div>
     </div>
 </body>
 

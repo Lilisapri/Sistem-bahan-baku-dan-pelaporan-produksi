@@ -47,8 +47,8 @@
                   
                         <label for="jenis">Jenis Bahan Baku</label>
                         <select id="jenis" name="jenis" class="form-control">
-                            <option value="Paper Roll" <?php echo ($data['jenis'] == 'Paper Roll') ? 'selected' : ''; ?>>Kertas Book Paper</option>
-                            <option value="Sheet Book Papper 52 Gram 79x109" <?php echo ($data['jenis'] == 'Sheet Book Papper 52 Gram 79x109') ? 'selected' : ''; ?>>Kertas Sheet Book Paper</option>
+                            <option value="Kertas Roll(Web)" <?php echo ($data['jenis'] == 'Kertas Roll') ? 'selected' : ''; ?>>Kertas Roll-ms-web</option>
+                            <option value="Kertas Rim (potong)" <?php echo ($data['jenis'] == 'Kertas Rim') ? 'selected' : ''; ?>>Kertas unit-potong</option>
                         </select>
                     </div>
                 </div>
